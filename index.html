@@ -437,6 +437,17 @@
             font-family: monospace;
             font-weight: bold;
         }
+
+        .hoodies-back-layer, .hoodies-front-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
         
         .fight-log {
             background: #000;
@@ -1439,7 +1450,7 @@
                     <input type="text" class="character-name-input" placeholder="Enter character name..." id="character-name">
                     
                     <div class="character-canvas" id="character-canvas">
-                        <div class="character-layer base-layer" id="base-layer"></div>
+    <div class="character-layer base-layer" id="base-layer"></div>
     <div class="character-layer body-layer" id="body-layer"></div>
     <div class="character-layer hoodies-back-layer" id="hoodies-back-layer"></div> <!-- NEW -->
     <div class="character-layer clothes-layer" id="clothes-layer"></div>
@@ -1447,7 +1458,7 @@
     <div class="character-layer glasses-layer" id="glasses-layer"></div>
     <div class="character-layer hat-layer" id="hat-layer"></div>
     <div class="character-layer special-layer" id="special-layer"></div>
-                    </div>
+</div>
                     
                     <div class="character-stats">
                         <div class="stat-row">
