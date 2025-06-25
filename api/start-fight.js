@@ -1,12 +1,12 @@
 import { Anthropic } from '@anthropic-ai/sdk';
 import { createClient } from 'redis';
 
-const client = createClient({
-  url: process.env.REDIS_URL
-});
-
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
+const client = createClient({
+  url: process.env.REDIS_URL
 });
 
 export default async function handler(req, res) {
@@ -15,8 +15,10 @@ export default async function handler(req, res) {
   }
 
   try {
+    await client.connect();
+    
     // Get two random raccoons from the fight queue
-    const fightQueue = await kv.lrange('fight_queue', 0, -1);
+    const fightQueue = await client.lRange('fight_queue', 0, -1);
     
     if (fightQueue.length < 2) {
       // Create default raccoons if queue is empty
@@ -40,11 +42,16 @@ export default async function handler(req, res) {
       const fightId = `fight_${Date.now()}`;
       
       // Store fight data
-      await kv.hset(`fight:${fightId}`, {
+      await client.hSet(`fight:${fightId}`, {
         fighters: JSON.stringify(defaultFighters),
         status: 'starting',
-        created: Date.now()
+        created: Date.now().toString()
       });
+
+      await client.disconnect();
+
+      // Start the fight generation in background
+      generateFight(fightId, defaultFighters[0], defaultFighters[1]);
 
       return res.json({
         success: true,
@@ -54,8 +61,8 @@ export default async function handler(req, res) {
     }
 
     // Get first two raccoons from queue
-    const fighter1Data = await kv.lpop('fight_queue');
-    const fighter2Data = await kv.lpop('fight_queue');
+    const fighter1Data = await client.lPop('fight_queue');
+    const fighter2Data = await client.lPop('fight_queue');
     
     const fighter1 = JSON.parse(fighter1Data);
     const fighter2 = JSON.parse(fighter2Data);
@@ -63,11 +70,13 @@ export default async function handler(req, res) {
     const fightId = `fight_${Date.now()}`;
     
     // Store fight data in Redis
-    await kv.hset(`fight:${fightId}`, {
+    await client.hSet(`fight:${fightId}`, {
       fighters: JSON.stringify([fighter1, fighter2]),
       status: 'starting',
-      created: Date.now()
+      created: Date.now().toString()
     });
+
+    await client.disconnect();
 
     // Start the fight generation in background
     generateFight(fightId, fighter1, fighter2);
@@ -80,11 +89,18 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Start fight error:', error);
+    try {
+      await client.disconnect();
+    } catch (e) {}
     res.status(500).json({ error: 'Failed to start fight' });
   }
 }
 
 async function generateFight(fightId, fighter1, fighter2) {
+  const client = createClient({
+    url: process.env.REDIS_URL
+  });
+
   try {
     const prompt = `Generate a turn-based fight between two trash pandas (raccoons) with these stats:
 
@@ -140,19 +156,27 @@ Return as JSON with this structure:
 
     const fightData = JSON.parse(response.content[0].text);
     
+    await client.connect();
+    
     // Store complete fight data
-    await kv.hset(`fight:${fightId}`, {
+    await client.hSet(`fight:${fightId}`, {
       fightData: JSON.stringify(fightData),
       status: 'generated'
     });
+
+    await client.disconnect();
 
     console.log(`Fight ${fightId} generated successfully`);
 
   } catch (error) {
     console.error(`Fight generation error for ${fightId}:`, error);
-    await kv.hset(`fight:${fightId}`, {
-      status: 'error',
-      error: error.message
-    });
+    try {
+      await client.connect();
+      await client.hSet(`fight:${fightId}`, {
+        status: 'error',
+        error: error.message
+      });
+      await client.disconnect();
+    } catch (e) {}
   }
 }
