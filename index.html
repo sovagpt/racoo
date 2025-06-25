@@ -656,16 +656,17 @@
         }
         
         .base-layer {
-            z-index: 1;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1300"><rect width="1600" height="1300" fill="%23f0f0f0"/><text x="800" y="650" text-anchor="middle" font-size="120" fill="%23666">BASE RACCOON</text></svg>');
-        }
-        
-        .hat-layer { z-index: 10; }
-        .clothes-layer { z-index: 5; }
-        .glasses-layer { z-index: 8; }
-        .special-layer { z-index: 12; }
-        .hoodies-layer { z-index: 6; }
-        .body-layer { z-index: 2; }
+    z-index: 5;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1300"><rect width="1600" height="1300" fill="%23f0f0f0"/><text x="800" y="650" text-anchor="middle" font-size="120" fill="%23666">BASE RACCOON</text></svg>');
+}
+
+.body-layer { z-index: 2; }
+.clothes-layer { z-index: 6; }
+.hoodies-back-layer { z-index: 4; }
+.hoodies-front-layer { z-index: 7; }
+.glasses-layer { z-index: 8; }
+.hat-layer { z-index: 10; }
+.special-layer { z-index: 12; 
         
         .builder-actions {
             display: flex;
