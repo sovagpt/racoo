@@ -437,17 +437,6 @@
             font-family: monospace;
             font-weight: bold;
         }
-
-        .hoodies-back-layer, .hoodies-front-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
         
         .fight-log {
             background: #000;
@@ -512,7 +501,8 @@
             border: 2px outset #c0c0c0;
             border-radius: 0;
             margin: 30px auto;
-            max-width: 800px;
+            max-width: 1200px;
+            width: 95%;
             font-family: 'MS Sans Serif', sans-serif;
             font-size: 11px;
             box-shadow: 2px 2px 0 #808080;
@@ -562,17 +552,17 @@
             padding: 8px;
             display: grid;
             grid-template-columns: 350px 1fr;
-            gap: 8px;
-            min-height: 500px;
+            gap: 12px;
+            min-height: 600px;
         }
         
         .trait-categories {
             background: white;
             border: 1px inset #c0c0c0;
-            padding: 4px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         
         .category-group {
@@ -592,19 +582,19 @@
         .trait-preview-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 4px;
+            gap: 6px;
         }
         
         .trait-preview {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: white;
             border: 1px inset #c0c0c0;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             color: #666;
             position: relative;
@@ -646,7 +636,7 @@
         
         .character-canvas {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             height: 700px;
             background: #f0f0f0;
             border: 1px inset #c0c0c0;
@@ -665,19 +655,19 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-
+        
         .base-layer {
-    z-index: 5;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1300"><rect width="1600" height="1300" fill="%23f0f0f0"/><text x="800" y="650" text-anchor="middle" font-size="120" fill="%23666">BASE RACCOON</text></svg>');
-}
-
-.body-layer { z-index: 2; }
-.clothes-layer { z-index: 6; }
-.hoodies-back-layer { z-index: 4; }
-.hoodies-front-layer { z-index: 7; }
-.glasses-layer { z-index: 8; }
-.hat-layer { z-index: 10; }
-.special-layer { z-index: 12; }
+            z-index: 5;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1300"><rect width="1600" height="1300" fill="%23f0f0f0"/><text x="800" y="650" text-anchor="middle" font-size="120" fill="%23666">BASE RACCOON</text></svg>');
+        }
+        
+        .body-layer { z-index: 2; }
+        .clothes-layer { z-index: 6; }
+        .hoodies-back-layer { z-index: 4; }
+        .hoodies-front-layer { z-index: 7; }
+        .glasses-layer { z-index: 8; }
+        .hat-layer { z-index: 10; }
+        .special-layer { z-index: 12; }
         
         .builder-actions {
             display: flex;
@@ -953,7 +943,7 @@
             font-size: 12px;
             font-weight: bold;
         }
-        
+
         .history-vs {
             color: #ff6600;
             font-size: 24px;
@@ -1155,6 +1145,22 @@
         }
         
         /* Mobile responsiveness */
+        @media (max-width: 1024px) {
+            .character-builder {
+                max-width: 95%;
+                margin: 20px auto;
+            }
+            
+            .builder-content {
+                grid-template-columns: 300px 1fr;
+                gap: 8px;
+            }
+            
+            .trait-preview-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
             .fighters-display {
                 grid-template-columns: 1fr;
@@ -1184,10 +1190,16 @@
             
             .builder-content {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
             
             .character-canvas {
-                height: 400px;
+                height: 500px;
+            }
+            
+            .trait-preview {
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -1450,15 +1462,15 @@
                     <input type="text" class="character-name-input" placeholder="Enter character name..." id="character-name">
                     
                     <div class="character-canvas" id="character-canvas">
-    <div class="character-layer base-layer" id="base-layer"></div>
-    <div class="character-layer body-layer" id="body-layer"></div>
-    <div class="character-layer hoodies-back-layer" id="hoodies-back-layer"></div> <!-- NEW -->
-    <div class="character-layer clothes-layer" id="clothes-layer"></div>
-    <div class="character-layer hoodies-front-layer" id="hoodies-front-layer"></div> <!-- NEW -->
-    <div class="character-layer glasses-layer" id="glasses-layer"></div>
-    <div class="character-layer hat-layer" id="hat-layer"></div>
-    <div class="character-layer special-layer" id="special-layer"></div>
-</div>
+                        <div class="character-layer base-layer" id="base-layer"></div>
+                        <div class="character-layer body-layer" id="body-layer"></div>
+                        <div class="character-layer hoodies-back-layer" id="hoodies-back-layer"></div>
+                        <div class="character-layer clothes-layer" id="clothes-layer"></div>
+                        <div class="character-layer hoodies-front-layer" id="hoodies-front-layer"></div>
+                        <div class="character-layer glasses-layer" id="glasses-layer"></div>
+                        <div class="character-layer hat-layer" id="hat-layer"></div>
+                        <div class="character-layer special-layer" id="special-layer"></div>
+                    </div>
                     
                     <div class="character-stats">
                         <div class="stat-row">
@@ -1704,7 +1716,6 @@
             </div>
         </div>
     </div>
-    
     <script>
         // Real-time fight and comment system
         let fightInProgress = false;
@@ -1845,54 +1856,6 @@
                 console.error('Failed to start fight stream:', error);
             }
         }
-
-        function updateBaseCharacter() {
-    const baseLayer = document.getElementById('base-layer');
-    
-    // Check what's selected
-    const hasHoodie = selectedTraits.hoodies !== 'none';
-    const hasHat = selectedTraits.hat !== 'none';
-    const hasSpecial = selectedTraits.special !== 'none';
-    
-    let baseName = 'normal';
-    
-    if (hasSpecial) {
-        baseName = 'niqab';
-    } else if (hasHoodie) {
-        baseName = 'hoodie';
-    } else if (hasHat) {
-        baseName = 'hat';
-    }
-    
-    baseLayer.style.backgroundImage = `url('assets/base/${baseName}.png')`;
-    baseLayer.style.backgroundSize = 'contain';
-    baseLayer.style.backgroundRepeat = 'no-repeat';
-    baseLayer.style.backgroundPosition = 'center';
-}
-
-function handleHatBlocking() {
-    const hatPreviews = document.querySelectorAll('[onclick*="selectTrait(\'hat\'"]');
-    const hasHoodie = selectedTraits.hoodies !== 'none';
-    
-    hatPreviews.forEach(preview => {
-        if (hasHoodie) {
-            preview.style.opacity = '0.3';
-            preview.style.pointerEvents = 'none';
-            preview.title = 'Cannot wear hat with hoodie';
-        } else {
-            preview.style.opacity = '1';
-            preview.style.pointerEvents = 'auto';
-            preview.title = '';
-        }
-    });
-    
-    // If hoodie is selected and hat was previously selected, remove hat
-    if (hasHoodie && selectedTraits.hat !== 'none') {
-        selectedTraits.hat = 'none';
-        document.querySelector('[onclick*="selectTrait(\'hat\', \'none\')"]').classList.add('selected');
-        document.getElementById('hat-layer').style.backgroundImage = 'none';
-    }
-}
         
         function addFightLogEntry(message, logType = 'normal') {
             const logElement = document.getElementById('fight-log');
@@ -1925,64 +1888,112 @@ function handleHatBlocking() {
         
         // Character Builder Functions
         function selectTrait(category, trait) {
-    selectedTraits[category] = trait;
-    
-    // Update visual selection
-    const categoryPreviews = document.querySelectorAll(`[onclick*="selectTrait('${category}',"]`);
-    categoryPreviews.forEach(preview => {
-        preview.classList.remove('selected');
-    });
-    event.target.classList.add('selected');
-    
-    // Update character preview and base
-    updateCharacterPreview(category, trait);
-    updateCharacterStats();
-}
+            selectedTraits[category] = trait;
+            
+            // Update visual selection
+            const categoryPreviews = document.querySelectorAll(`[onclick*="selectTrait('${category}',"]`);
+            categoryPreviews.forEach(preview => {
+                preview.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            // Update character preview and base
+            updateCharacterPreview(category, trait);
+            updateCharacterStats();
+        }
         
         function updateCharacterPreview(category, trait) {
-    if (category === 'hoodies') {
-        // Handle hoodie special case with two layers
-        const backLayer = document.getElementById('hoodies-back-layer');
-        const frontLayer = document.getElementById('hoodies-front-layer');
-        
-        if (trait === 'none') {
-            backLayer.style.backgroundImage = 'none';
-            frontLayer.style.backgroundImage = 'none';
-        } else {
-            // Back layer: hoodie_1, hoodie_2, etc. (behind character)
-            backLayer.style.backgroundImage = `url('assets/hoodies/${trait}.png')`;
-            backLayer.style.backgroundSize = 'contain';
-            backLayer.style.backgroundRepeat = 'no-repeat';
-            backLayer.style.backgroundPosition = 'center';
+            if (category === 'hoodies') {
+                // Handle hoodie special case with two layers
+                const backLayer = document.getElementById('hoodies-back-layer');
+                const frontLayer = document.getElementById('hoodies-front-layer');
+                
+                if (trait === 'none') {
+                    backLayer.style.backgroundImage = 'none';
+                    frontLayer.style.backgroundImage = 'none';
+                } else {
+                    // Back layer: hoodies_1, hoodies_2, etc. (behind character)
+                    backLayer.style.backgroundImage = `url('assets/hoodies/${trait}.png')`;
+                    backLayer.style.backgroundSize = 'contain';
+                    backLayer.style.backgroundRepeat = 'no-repeat';
+                    backLayer.style.backgroundPosition = 'center';
+                    
+                    // Front layer: hoodie1, hoodie2, etc. (in front of character)
+                    const frontTrait = trait.replace('hoodies_', 'hoodie');
+                    frontLayer.style.backgroundImage = `url('assets/hoodies/${frontTrait}.png')`;
+                    frontLayer.style.backgroundSize = 'contain';
+                    frontLayer.style.backgroundRepeat = 'no-repeat';
+                    frontLayer.style.backgroundPosition = 'center';
+                }
+            } else {
+                // Handle all other categories normally
+                const layer = document.getElementById(category + '-layer');
+                
+                if (trait === 'none' || trait === 'normal') {
+                    layer.style.backgroundImage = 'none';
+                } else {
+                    const imagePath = `assets/${category}/${trait}.png`;
+                    layer.style.backgroundImage = `url('${imagePath}')`;
+                    layer.style.backgroundSize = 'contain';
+                    layer.style.backgroundRepeat = 'no-repeat';
+                    layer.style.backgroundPosition = 'center';
+                }
+            }
             
-            // Front layer: hoodie1, hoodie2, etc. (in front of character)
-            const frontTrait = trait.replace('hoodies_', 'hoodie');
-            frontLayer.style.backgroundImage = `url('assets/hoodies/${frontTrait}.png')`;
-            frontLayer.style.backgroundSize = 'contain';
-            frontLayer.style.backgroundRepeat = 'no-repeat';
-            frontLayer.style.backgroundPosition = 'center';
+            // Update base character whenever any trait changes
+            updateBaseCharacter();
+            
+            // Handle hat blocking when hoodie is selected
+            handleHatBlocking();
         }
-    } else {
-        // Handle all other categories normally
-        const layer = document.getElementById(category + '-layer');
         
-        if (trait === 'none' || trait === 'normal') {
-            layer.style.backgroundImage = 'none';
-        } else {
-            const imagePath = `assets/${category}/${trait}.png`;
-            layer.style.backgroundImage = `url('${imagePath}')`;
-            layer.style.backgroundSize = 'contain';
-            layer.style.backgroundRepeat = 'no-repeat';
-            layer.style.backgroundPosition = 'center';
+        function updateBaseCharacter() {
+            const baseLayer = document.getElementById('base-layer');
+            
+            // Check what's selected
+            const hasHoodie = selectedTraits.hoodies !== 'none';
+            const hasHat = selectedTraits.hat !== 'none';
+            const hasSpecial = selectedTraits.special !== 'none';
+            
+            let baseName = 'normal';
+            
+            if (hasSpecial) {
+                baseName = 'niqab';
+            } else if (hasHoodie) {
+                baseName = 'hoodie';
+            } else if (hasHat) {
+                baseName = 'hat';
+            }
+            
+            baseLayer.style.backgroundImage = `url('assets/base/${baseName}.png')`;
+            baseLayer.style.backgroundSize = 'contain';
+            baseLayer.style.backgroundRepeat = 'no-repeat';
+            baseLayer.style.backgroundPosition = 'center';
         }
-    }
-    
-    // Update base character whenever any trait changes
-    updateBaseCharacter();
-    
-    // Handle hat blocking when hoodie is selected
-    handleHatBlocking();
-}
+        
+        function handleHatBlocking() {
+            const hatPreviews = document.querySelectorAll('[onclick*="selectTrait(\'hat\'"]');
+            const hasHoodie = selectedTraits.hoodies !== 'none';
+            
+            hatPreviews.forEach(preview => {
+                if (hasHoodie) {
+                    preview.style.opacity = '0.3';
+                    preview.style.pointerEvents = 'none';
+                    preview.title = 'Cannot wear hat with hoodie';
+                } else {
+                    preview.style.opacity = '1';
+                    preview.style.pointerEvents = 'auto';
+                    preview.title = '';
+                }
+            });
+            
+            // If hoodie is selected and hat was previously selected, remove hat
+            if (hasHoodie && selectedTraits.hat !== 'none') {
+                selectedTraits.hat = 'none';
+                document.querySelector('[onclick*="selectTrait(\'hat\', \'none\')"]').classList.add('selected');
+                document.getElementById('hat-layer').style.backgroundImage = 'none';
+            }
+        }
         
         function updateCharacterStats() {
             let attack = 10;
@@ -2065,35 +2076,36 @@ function handleHatBlocking() {
         }
         
         function resetCharacter() {
-    selectedTraits = {
-        hat: 'none',
-        clothes: 'none',
-        glasses: 'none',
-        hoodies: 'none',
-        special: 'none',
-        body: 'normal'
-    };
-    
-    document.querySelectorAll('.trait-preview').forEach(preview => {
-        preview.classList.remove('selected');
-    });
-    
-    document.querySelector('[data-trait="none"]').classList.add('selected');
-    document.querySelector('[data-trait="normal"]').classList.add('selected');
-    
-    // Clear all layers including both hoodie layers
-    document.getElementById('hat-layer').style.backgroundImage = 'none';
-    document.getElementById('clothes-layer').style.backgroundImage = 'none';
-    document.getElementById('glasses-layer').style.backgroundImage = 'none';
-    document.getElementById('hoodies-back-layer').style.backgroundImage = 'none';
-    document.getElementById('hoodies-front-layer').style.backgroundImage = 'none';
-    document.getElementById('special-layer').style.backgroundImage = 'none';
-    document.getElementById('body-layer').style.backgroundImage = 'none';
-    
-    document.getElementById('character-name').value = '';
-    updateBaseCharacter(); // This will set the base to normal
-    updateCharacterStats();
-}
+            selectedTraits = {
+                hat: 'none',
+                clothes: 'none',
+                glasses: 'none',
+                hoodies: 'none',
+                special: 'none',
+                body: 'normal'
+            };
+            
+            document.querySelectorAll('.trait-preview').forEach(preview => {
+                preview.classList.remove('selected');
+            });
+            
+            // Select the correct default options
+            document.querySelectorAll('[data-trait="none"]').forEach(el => el.classList.add('selected'));
+            document.querySelector('[data-trait="normal"]').classList.add('selected');
+            
+            // Clear all layers including both hoodie layers
+            document.getElementById('hat-layer').style.backgroundImage = 'none';
+            document.getElementById('clothes-layer').style.backgroundImage = 'none';
+            document.getElementById('glasses-layer').style.backgroundImage = 'none';
+            document.getElementById('hoodies-back-layer').style.backgroundImage = 'none';
+            document.getElementById('hoodies-front-layer').style.backgroundImage = 'none';
+            document.getElementById('special-layer').style.backgroundImage = 'none';
+            document.getElementById('body-layer').style.backgroundImage = 'none';
+            
+            document.getElementById('character-name').value = '';
+            updateBaseCharacter(); // This will set the base to normal
+            updateCharacterStats();
+        }
         
         function exportCharacter() {
             const name = document.getElementById('character-name').value || 'UnnamedRaccoon';
@@ -2371,9 +2383,12 @@ function handleHatBlocking() {
             }
         }
         
-        // Initialize
-        loadStats();
-        loadComments();
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadComments();
+            updateBaseCharacter(); // Set initial base character
+        });
     </script>
 </body>
 </html>
