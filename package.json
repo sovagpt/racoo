@@ -1,10 +1,6 @@
 {
-  "name": "trash-pandas",
-  "version": "1.0.0",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.24.3"
-  },
-  "scripts": {
-    "dev": "vercel dev"
+    "@anthropic-ai/sdk": "^0.24.3",
+    "redis": "^4.6.0"
   }
 }
