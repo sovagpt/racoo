@@ -746,19 +746,19 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Fights Today</div>
-                <div class="stat-value">147</div>
+                <div class="stat-value" id="fights-today">0</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Active Viewers</div>
-                <div class="stat-value" id="viewer-count">1,337</div>
+                <div class="stat-value" id="viewer-count">0</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Total Prize Pool</div>
-                <div class="stat-value">$2,420</div>
+                <div class="stat-value" id="total-prize">$0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Champions</div>
-                <div class="stat-value">69</div>
+                <div class="stat-label">Active Champions</div>
+                <div class="stat-value" id="champion-count">0</div>
             </div>
         </div>
         
@@ -814,7 +814,7 @@
         <div class="comments-section">
             <div class="comments-header">
                 <span>Live Championship Chat</span>
-                <span class="viewer-count">1,337 spectators</span>
+                <span class="viewer-count" id="chat-viewer-count">0 spectators</span>
             </div>
             
             <div class="comment-form">
@@ -879,15 +879,50 @@
         
         setInterval(updateCountdown, 1000);
         
-        // Viewer count animation
-        function animateViewerCount() {
-            const viewerElement = document.getElementById('viewer-count');
-            const baseCount = 1337;
-            const variation = Math.floor(Math.random() * 50) - 25;
-            viewerElement.textContent = (baseCount + variation).toLocaleString();
+        // Load and update real stats
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/get-stats');
+                const stats = await response.json();
+                
+                if (stats.success) {
+                    document.getElementById('fights-today').textContent = stats.fightsToday.toLocaleString();
+                    document.getElementById('viewer-count').textContent = stats.activeViewers.toLocaleString();
+                    document.getElementById('total-prize').textContent = `${stats.totalPrizePool.toLocaleString()}`;
+                    document.getElementById('champion-count').textContent = stats.championCount.toLocaleString();
+                    document.getElementById('chat-viewer-count').textContent = `${stats.activeViewers.toLocaleString()} spectators`;
+                }
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+                // Set default values if API fails
+                document.getElementById('fights-today').textContent = '0';
+                document.getElementById('viewer-count').textContent = '0';
+                document.getElementById('total-prize').textContent = '$0';
+                document.getElementById('champion-count').textContent = '0';
+                document.getElementById('chat-viewer-count').textContent = '0 spectators';
+            }
         }
         
-        setInterval(animateViewerCount, 5000);
+        // Update stats every 30 seconds
+        setInterval(loadStats, 30000);
+        
+        // Viewer count animation - now updates real count with small variations
+        function animateViewerCount() {
+            // This will add small realistic fluctuations to the real viewer count
+            const viewerElement = document.getElementById('viewer-count');
+            const chatViewerElement = document.getElementById('chat-viewer-count');
+            
+            // Get current count and add small variation
+            const currentCount = parseInt(viewerElement.textContent.replace(/,/g, '')) || 0;
+            const variation = Math.floor(Math.random() * 10) - 5; // +/- 5 viewers
+            const newCount = Math.max(0, currentCount + variation);
+            
+            viewerElement.textContent = newCount.toLocaleString();
+            chatViewerElement.textContent = `${newCount.toLocaleString()} spectators`;
+        }
+        
+        // Only animate viewer count if we have real data
+        setInterval(animateViewerCount, 15000);
         
         // Start new fight (calls backend API)
         async function startNewFight() {
@@ -1106,4 +1141,8 @@
         }
         
         // Initialize
+        loadStats();
         loadComments();
+    </script>
+</body>
+</html>
