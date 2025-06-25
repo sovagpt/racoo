@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/arena/ - The Dumpster Arena</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0F0F23 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23111133"/><rect x="20" y="0" width="20" height="20" fill="%230F0F23"/><rect x="0" y="20" width="20" height="20" fill="%230F0F23"/></svg>');
+            font-family: 'Courier New', monospace;
+            color: #d0d0d0;
+            line-height: 1.3;
+        }
+        
+        .header-bar {
+            background: linear-gradient(135deg, #1a1a3a 0%, #2d1b4e 50%, #1a1a3a 100%);
+            border-bottom: 3px solid #ff6600;
+            padding: 8px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .board-title {
+            color: #ff6600;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-link {
+            color: #81c784;
+            text-decoration: none;
+            font-size: 12px;
+            border: 1px solid #444;
+            padding: 4px 8px;
+            background: rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #ff6600;
+            color: #000;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        .arena-header {
+            background: linear-gradient(45deg, #2d1b4e, #1a1a3a, #2d1b4e);
+            border: 2px solid #ff6600;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .arena-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,102,0,0.1), transparent);
+            animation: sweep 3s linear infinite;
+        }
+        
+        @keyframes sweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .arena-title {
+            font-size: 32px;
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px #000;
+            letter-spacing: 2px;
+        }
+        
+        .countdown-container {
+            background: #000;
+            border: 2px solid #00ff41;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .countdown-label {
+            color: #00ff41;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .countdown-timer {
+            font-size: 36px;
+            color: #ff6600;
+            font-weight: bold;
+            font-family: monospace;
+            text-shadow: 0 0 10px #ff6600;
+        }
+        
+        .prize-pool {
+            background: linear-gradient(45deg, #1a3d1a, #1a1a1a);
+            border: 2px solid #81c784;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .prize-amount {
+            font-size: 24px;
+            color: #81c784;
+            font-weight: bold;
+        }
+        
+        .fight-arena {
+            background: #1a1a1a;
+            border: 2px solid #ff6600;
+            margin: 20px 0;
+            min-height: 400px;
+        }
+        
+        .arena-status {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #555;
+        }
+        
+        .fighters-display {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            padding: 20px;
+            align-items: center;
+        }
+        
+        .fighter {
+            text-align: center;
+        }
+        
+        .fighter-image {
+            width: 150px;
+            height: 150px;
+            background: #333;
+            border: 2px solid #555;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 12px;
+        }
+        
+        .fighter-name {
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .fighter-stats {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .health-bar {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border: 1px solid #555;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .health-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000, #ffaa00, #00ff00);
+            transition: width 0.5s ease;
+        }
+        
+        .health-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        .vs-text {
+            color: #ff6600;
+            font-size: 48px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px #000;
+        }
+        
+        .fight-log {
+            background: #000;
+            color: #00ff41;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            border-top: 1px solid #333;
+        }
+        
+        .fight-log::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .fight-log::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        .fight-log::-webkit-scrollbar-thumb {
+            background: #ff6600;
+        }
+        
+        .log-line {
+            margin: 3px 0;
+            padding: 2px 0;
+        }
+        
+        .log-line.damage {
+            color: #ff6666;
+        }
+        
+        .log-line.crit {
+            color: #ffaa00;
+            font-weight: bold;
+        }
+        
+        .log-line.system {
+            color: #81c784;
+        }
+        
+        .comments-section {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            margin: 20px 0;
+        }
+        
+        .comments-header {
+            background: #333;
+            color: #fff;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #555;
+        }
+        
+        .comment-form {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .comment-input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #555;
+            color: #d0d0d0;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 12px;
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .comment-submit {
+            background: #ff6600;
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+        }
+        
+        .comment-submit:hover {
+            background: #ff9933;
+        }
+        
+        .comments-feed {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .comment {
+            padding: 10px 15px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 12px;
+        }
+        
+        .comment-header {
+            margin-bottom: 5px;
+            font-size: 11px;
+        }
+        
+        .comment-name {
+            color: #117743;
+            font-weight: bold;
+        }
+        
+        .comment-time {
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .comment-number {
+            color: #ff6600;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .comment-text {
+            color: #d0d0d0;
+            line-height: 1.4;
+        }
+        
+        .greentext {
+            color: #789922;
+        }
+        
+        .enter-fight {
+            background: linear-gradient(45deg, #ff6600, #ff0080, #8000ff, #0080ff);
+            background-size: 400% 400%;
+            color: #000;
+            border: 3px solid #fff;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            font-size: 16px;
+            letter-spacing: 1px;
+            animation: bgShift 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255,102,0,0.5);
+            text-shadow: 1px 1px 0 #fff, -1px -1px 0 #000;
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        
+        @keyframes bgShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .enter-fight:hover {
+            background: linear-gradient(45deg, #00ff41, #ff6600, #ff0080, #8000ff);
+            background-size: 400% 400%;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255,102,0,0.8);
+        }
+        
+        .fight-history {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            margin: 20px 0;
+            padding: 15px;
+        }
+        
+        .history-title {
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .history-item {
+            background: #000;
+            border: 1px solid #333;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 11px;
+        }
+        
+        .winner {
+            color: #81c784;
+            font-weight: bold;
+        }
+        
+        .loser {
+            color: #ff6666;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Bar -->
+    <div class="header-bar">
+        <div class="nav-container">
+            <div class="board-title">/arena/ - The Dumpster Arena</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">[Home]</a>
+                <a href="#" class="nav-link">[Rules]</a>
+                <a href="#" class="nav-link">[Leaderboard]</a>
+                <a href="#" class="nav-link">[History]</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <!-- Arena Header -->
+        <div class="arena-header">
+            <div class="arena-title">THE DUMPSTER ARENA</div>
+            <div style="color: #81c784; font-size: 14px;">Where Trash Pandas Fight for Digital Glory</div>
+        </div>
+        
+        <!-- Countdown Timer -->
+        <div class="countdown-container">
+            <div class="countdown-label">Next Fight In:</div>
+            <div class="countdown-timer" id="countdown">04:23</div>
+        </div>
+        
+        <!-- Prize Pool -->
+        <div class="prize-pool">
+            <div style="color: #81c784; margin-bottom: 5px;">Current Prize Pool</div>
+            <div class="prize-amount">$42.69 TRASH</div>
+            <div style="font-size: 11px; color: #999; margin-top: 5px;">Winner takes 80% | 20% goes to next pool</div>
+        </div>
+        
+        <!-- Fight Arena -->
+        <div class="fight-arena">
+            <div class="arena-status" id="arena-status">
+                FIGHT IN PROGRESS - Round 3 of 5
+            </div>
+            
+            <div class="fighters-display">
+                <div class="fighter">
+                    <div class="fighter-image">[RACCOON_1_IMAGE]<br>150x150</div>
+                    <div class="fighter-name">TrashKing420</div>
+                    <div class="fighter-stats">ATK: 15 | DEF: 12 | SPD: 8</div>
+                    <div class="health-bar">
+                        <div class="health-fill" style="width: 65%"></div>
+                        <div class="health-text">65/100 HP</div>
+                    </div>
+                </div>
+                
+                <div class="vs-text">VS</div>
+                
+                <div class="fighter">
+                    <div class="fighter-image">[RACCOON_2_IMAGE]<br>150x150</div>
+                    <div class="fighter-name">DumpsterLord</div>
+                    <div class="fighter-stats">ATK: 18 | DEF: 9 | SPD: 11</div>
+                    <div class="health-bar">
+                        <div class="health-fill" style="width: 42%"></div>
+                        <div class="health-text">42/100 HP</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fight-log" id="fight-log">
+                <div class="log-line system">>>> Waiting for next fight to begin...</div>
+                <div class="log-line system">>>> Fight will start automatically when countdown reaches 00:00</div>
+            </div>
+        </div>
+        
+        <!-- Enter Next Fight -->
+        <a href="#" class="enter-fight">ENTER YOUR RACCOON IN NEXT FIGHT</a>
+        
+        <!-- Live Comments -->
+        <div class="comments-section">
+            <div class="comments-header">Live Fight Comments - 47 anons watching</div>
+            
+            <div class="comment-form">
+                <textarea class="comment-input" placeholder="Post anonymous comment..."></textarea>
+                <button class="comment-submit">Post Comment</button>
+            </div>
+            
+            <div class="comments-feed" id="comments-feed">
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-name">System</span>
+                        <span class="comment-time">--:--:--</span>
+                        <span class="comment-number">No.000000000</span>
+                    </div>
+                    <div class="comment-text">Real comments will appear here when users post. No fake messages.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fight History -->
+        <div class="fight-history">
+            <div class="history-title">Recent Fight Results</div>
+            
+            <div class="history-item">
+                <span class="winner">NightCrawler69</span> defeated <span class="loser">GarbageKing</span> - Prize: $23.42 TRASH
+                <div style="font-size: 10px; color: #666; margin-top: 3px;">5 minutes ago | 89 viewers</div>
+            </div>
+            
+            <div class="history-item">
+                <span class="winner">AutismLord</span> defeated <span class="loser">TrashBandit</span> - Prize: $31.17 TRASH
+                <div style="font-size: 10px; color: #666; margin-top: 3px;">10 minutes ago | 127 viewers</div>
+            </div>
+            
+            <div class="history-item">
+                <span class="winner">DumpsterDiver</span> defeated <span class="loser">ChaosRaccoon</span> - Prize: $18.96 TRASH
+                <div style="font-size: 10px; color: #666; margin-top: 3px;">15 minutes ago | 73 viewers</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Real-time fight and comment system
+        let fightInProgress = false;
+        let currentFighters = null;
+        
+        // Countdown timer
+        let timeLeft = 263; // 4:23 in seconds
+        
+        function updateCountdown() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('countdown').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                timeLeft = 300; // Reset to 5 minutes
+                startNewFight();
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        
+        // Start new fight (calls backend API)
+        async function startNewFight() {
+            if (fightInProgress) return;
+            
+            try {
+                // This would call your backend API that uses Anthropic
+                const response = await fetch('/api/start-fight', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const fightData = await response.json();
+                
+                if (fightData.success) {
+                    fightInProgress = true;
+                    currentFighters = fightData.fighters;
+                    updateArenaDisplay(fightData);
+                    startFightStream(fightData.fightId);
+                }
+            } catch (error) {
+                console.error('Failed to start fight:', error);
+            }
+        }
+        
+        // Update arena with fight data
+        function updateArenaDisplay(fightData) {
+            document.getElementById('arena-status').textContent = 'FIGHT IN PROGRESS';
+            
+            // Update fighter displays with real data
+            const fighters = document.querySelectorAll('.fighter');
+            fighters[0].querySelector('.fighter-name').textContent = fightData.fighters[0].name;
+            fighters[1].querySelector('.fighter-name').textContent = fightData.fighters[1].name;
+            
+            // Update stats
+            fighters[0].querySelector('.fighter-stats').textContent = 
+                `ATK: ${fightData.fighters[0].attack} | DEF: ${fightData.fighters[0].defense} | SPD: ${fightData.fighters[0].speed}`;
+            fighters[1].querySelector('.fighter-stats').textContent = 
+                `ATK: ${fightData.fighters[1].attack} | DEF: ${fightData.fighters[1].defense} | SPD: ${fightData.fighters[1].speed}`;
+        }
+        
+        // Stream fight progress from backend (which uses Anthropic API)
+        async function startFightStream(fightId) {
+            try {
+                // This would establish SSE or WebSocket connection to your backend
+                const eventSource = new EventSource(`/api/fight-stream/${fightId}`);
+                
+                eventSource.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    
+                    if (data.type === 'fight-action') {
+                        addFightLogEntry(data.message, data.logType);
+                        updateHealthBars(data.health);
+                    } else if (data.type === 'fight-end') {
+                        endFight(data.winner, data.prize);
+                        eventSource.close();
+                    }
+                };
+                
+                eventSource.onerror = function() {
+                    console.error('Fight stream error');
+                    eventSource.close();
+                };
+                
+            } catch (error) {
+                console.error('Failed to start fight stream:', error);
+            }
+        }
+        
+        // Add real fight log entries from Anthropic API
+        function addFightLogEntry(message, logType = 'normal') {
+            const logElement = document.getElementById('fight-log');
+            const newLine = document.createElement('div');
+            newLine.className = `log-line ${logType}`;
+            newLine.textContent = message;
+            
+            logElement.appendChild(newLine);
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        // Update health bars with real data
+        function updateHealthBars(healthData) {
+            const healthFills = document.querySelectorAll('.health-fill');
+            const healthTexts = document.querySelectorAll('.health-text');
+            
+            healthFills[0].style.width = `${healthData.fighter1.percentage}%`;
+            healthTexts[0].textContent = `${healthData.fighter1.current}/${healthData.fighter1.max} HP`;
+            
+            healthFills[1].style.width = `${healthData.fighter2.percentage}%`;
+            healthTexts[1].textContent = `${healthData.fighter2.current}/${healthData.fighter2.max} HP`;
+        }
+        
+        // End fight and show results
+        function endFight(winner, prize) {
+            fightInProgress = false;
+            document.getElementById('arena-status').textContent = `FIGHT OVER - ${winner} WINS!`;
+            addFightLogEntry(`>>> ${winner} wins and takes ${prize} TRASH!`, 'system');
+            
+            // Update fight history would happen here
+            updateFightHistory(winner, prize);
+        }
+        
+        // Real comment submission
+        document.querySelector('.comment-submit').addEventListener('click', async function() {
+            const input = document.querySelector('.comment-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            try {
+                // Send comment to backend
+                const response = await fetch('/api/post-comment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: message,
+                        fightId: currentFighters?.fightId || null 
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    addCommentToFeed(result.comment);
+                    input.value = '';
+                }
+            } catch (error) {
+                console.error('Failed to post comment:', error);
+            }
+        });
+        
+        // Add comment to feed
+        function addCommentToFeed(comment) {
+            const commentsFeed = document.getElementById('comments-feed');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            
+            newComment.innerHTML = `
+                <div class="comment-header">
+                    <span class="comment-name">${comment.name || 'Anonymous'}</span>
+                    <span class="comment-time">${comment.timestamp}</span>
+                    <span class="comment-number">No.${comment.id}</span>
+                </div>
+                <div class="comment-text">${comment.message}</div>
+            `;
+            
+            commentsFeed.appendChild(newComment);
+            commentsFeed.scrollTop = commentsFeed.scrollHeight;
+            
+            // Keep only last 50 comments
+            while (commentsFeed.children.length > 50) {
+                commentsFeed.removeChild(commentsFeed.firstChild);
+            }
+        }
+        
+        // Load existing comments on page load
+        async function loadComments() {
+            try {
+                const response = await fetch('/api/get-comments');
+                const comments = await response.json();
+                
+                comments.forEach(comment => addCommentToFeed(comment));
+            } catch (error) {
+                console.error('Failed to load comments:', error);
+            }
+        }
+        
+        // Enter key to submit comment
+        document.querySelector('.comment-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.querySelector('.comment-submit').click();
+            }
+        });
+        
+        // Submit raccoon for next fight
+        document.querySelector('.enter-fight').addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const response = await fetch('/api/enter-fight', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        // This would include the user's raccoon data
+                        raccoon: getUserRaccoon() 
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Your raccoon has been entered in the next fight!');
+                } else {
+                    alert('Failed to enter fight: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Failed to enter fight:', error);
+            }
+        });
+        
+        // Get user's raccoon data (from character builder)
+        function getUserRaccoon() {
+            // This would get the raccoon data from localStorage or the character builder
+            return {
+                name: 'UserRaccoon',
+                traits: {},
+                stats: { attack: 10, defense: 10, speed: 10 }
+            };
+        }
+        
+        // Update fight history
+        function updateFightHistory(winner, prize) {
+            // This would call backend to update fight history
+            // For now, just log it
+            console.log(`Fight ended: ${winner} won ${prize}`);
+        }
+        
+        // Initialize
+        loadComments();
+    </script>
+</body>
+</html>
