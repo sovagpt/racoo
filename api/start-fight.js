@@ -172,9 +172,26 @@ Return as JSON with this structure:
     // Set expiry on daily counter (expire tomorrow)
     await client.expireAt(`fights_today:${today}`, Math.floor(Date.now() / 1000) + 86400);
 
+    // Store completed fight for history
+    const winner = fightData.winner;
+    const prize = (Math.random() * 100 + 10).toFixed(2); // Random prize for now
+    const results = ['Decision', 'KO Round 1', 'KO Round 2', 'TKO Round 3', 'TKO Round 4', 'Submission'];
+    const result = results[Math.floor(Math.random() * results.length)];
+    
+    await client.hSet(`completed_fight:${Date.now()}`, {
+      fighters: JSON.stringify([fighter1, fighter2]),
+      winner: winner,
+      prize: prize,
+      result: result,
+      timestamp: Date.now().toString(),
+      rounds: fightData.totalRounds.toString(),
+      fightLog: JSON.stringify(fightData.rounds),
+      txHash: generateMockTxHash() // In production, this would be the real transaction
+    });
+
     await client.disconnect();
 
-    console.log(`Fight ${fightId} generated successfully`);
+    console.log(`Fight ${fightId} generated and stored in history`);
 
   } catch (error) {
     console.error(`Fight generation error for ${fightId}:`, error);
@@ -187,4 +204,14 @@ Return as JSON with this structure:
       await client.disconnect();
     } catch (e) {}
   }
+}
+
+// Generate mock Solana transaction hash
+function generateMockTxHash() {
+  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz123456789';
+  let result = '';
+  for (let i = 0; i < 88; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
 }
