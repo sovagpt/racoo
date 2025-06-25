@@ -1,15 +1,15 @@
 import { createClient } from 'redis';
 
-const client = createClient({
-  url: process.env.REDIS_URL
-});
-
 export default async function handler(req, res) {
   const { fightId } = req.query;
 
   if (!fightId) {
     return res.status(400).json({ error: 'Fight ID required' });
   }
+
+  const client = createClient({
+    url: process.env.REDIS_URL
+  });
 
   // Set up Server-Sent Events
   res.writeHead(200, {
@@ -21,17 +21,26 @@ export default async function handler(req, res) {
   });
 
   try {
+    await client.connect();
+    
     // Get fight data
-    const fightData = await kv.hget(`fight:${fightId}`, 'fightData');
-    const status = await kv.hget(`fight:${fightId}`, 'status');
+    const fightData = await client.hGet(`fight:${fightId}`, 'fightData');
+    const status = await client.hGet(`fight:${fightId}`, 'status');
 
     if (!fightData || status !== 'generated') {
       res.write(`data: ${JSON.stringify({ type: 'waiting', message: 'Fight generating...' })}\n\n`);
       
+      await client.disconnect();
+      
       // Poll for fight data
       const pollForFight = async () => {
-        const data = await kv.hget(`fight:${fightId}`, 'fightData');
-        const currentStatus = await kv.hget(`fight:${fightId}`, 'status');
+        const pollClient = createClient({ url: process.env.REDIS_URL });
+        await pollClient.connect();
+        
+        const data = await pollClient.hGet(`fight:${fightId}`, 'fightData');
+        const currentStatus = await pollClient.hGet(`fight:${fightId}`, 'status');
+        
+        await pollClient.disconnect();
         
         if (data && currentStatus === 'generated') {
           streamFight(JSON.parse(data));
@@ -47,10 +56,14 @@ export default async function handler(req, res) {
       return;
     }
 
+    await client.disconnect();
     streamFight(JSON.parse(fightData));
 
   } catch (error) {
     console.error('Fight stream error:', error);
+    try {
+      await client.disconnect();
+    } catch (e) {}
     res.write(`data: ${JSON.stringify({ type: 'error', message: 'Stream error' })}\n\n`);
     res.end();
   }
@@ -91,7 +104,7 @@ export default async function handler(req, res) {
       })}\n\n`);
 
       roundIndex++;
-      setTimeout(streamNextRound, 2000 + Math.random() * 2000); // 2-4 second delays
+      setTimeout(streamNextRound, 2000 + Math.random() * 2000);
     };
 
     // Start streaming
