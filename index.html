@@ -1439,12 +1439,13 @@
                     
                     <div class="character-canvas" id="character-canvas">
                         <div class="character-layer base-layer" id="base-layer"></div>
-                        <div class="character-layer body-layer" id="body-layer"></div>
-                        <div class="character-layer clothes-layer" id="clothes-layer"></div>
-                        <div class="character-layer hoodies-layer" id="hoodies-layer"></div>
-                        <div class="character-layer glasses-layer" id="glasses-layer"></div>
-                        <div class="character-layer hat-layer" id="hat-layer"></div>
-                        <div class="character-layer special-layer" id="special-layer"></div>
+    <div class="character-layer body-layer" id="body-layer"></div>
+    <div class="character-layer hoodies-back-layer" id="hoodies-back-layer"></div> <!-- NEW -->
+    <div class="character-layer clothes-layer" id="clothes-layer"></div>
+    <div class="character-layer hoodies-front-layer" id="hoodies-front-layer"></div> <!-- NEW -->
+    <div class="character-layer glasses-layer" id="glasses-layer"></div>
+    <div class="character-layer hat-layer" id="hat-layer"></div>
+    <div class="character-layer special-layer" id="special-layer"></div>
                     </div>
                     
                     <div class="character-stats">
@@ -1927,16 +1928,41 @@ function handleHatBlocking() {
 }
         
         function updateCharacterPreview(category, trait) {
-    const layer = document.getElementById(category + '-layer');
-    
-    if (trait === 'none' || trait === 'normal') {
-        layer.style.backgroundImage = 'none';
+    if (category === 'hoodies') {
+        // Handle hoodie special case with two layers
+        const backLayer = document.getElementById('hoodies-back-layer');
+        const frontLayer = document.getElementById('hoodies-front-layer');
+        
+        if (trait === 'none') {
+            backLayer.style.backgroundImage = 'none';
+            frontLayer.style.backgroundImage = 'none';
+        } else {
+            // Back layer: hoodie_1, hoodie_2, etc. (behind character)
+            backLayer.style.backgroundImage = `url('assets/hoodies/${trait}.png')`;
+            backLayer.style.backgroundSize = 'contain';
+            backLayer.style.backgroundRepeat = 'no-repeat';
+            backLayer.style.backgroundPosition = 'center';
+            
+            // Front layer: hoodie1, hoodie2, etc. (in front of character)
+            const frontTrait = trait.replace('hoodies_', 'hoodie');
+            frontLayer.style.backgroundImage = `url('assets/hoodies/${frontTrait}.png')`;
+            frontLayer.style.backgroundSize = 'contain';
+            frontLayer.style.backgroundRepeat = 'no-repeat';
+            frontLayer.style.backgroundPosition = 'center';
+        }
     } else {
-        const imagePath = `assets/${category}/${trait}.png`;
-        layer.style.backgroundImage = `url('${imagePath}')`;
-        layer.style.backgroundSize = 'contain';
-        layer.style.backgroundRepeat = 'no-repeat';
-        layer.style.backgroundPosition = 'center';
+        // Handle all other categories normally
+        const layer = document.getElementById(category + '-layer');
+        
+        if (trait === 'none' || trait === 'normal') {
+            layer.style.backgroundImage = 'none';
+        } else {
+            const imagePath = `assets/${category}/${trait}.png`;
+            layer.style.backgroundImage = `url('${imagePath}')`;
+            layer.style.backgroundSize = 'contain';
+            layer.style.backgroundRepeat = 'no-repeat';
+            layer.style.backgroundPosition = 'center';
+        }
     }
     
     // Update base character whenever any trait changes
