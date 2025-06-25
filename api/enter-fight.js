@@ -10,15 +10,18 @@ export default async function handler(req, res) {
   }
 
   try {
+    await client.connect();
+    
     const { raccoon } = req.body;
 
     if (!raccoon || !raccoon.name) {
+      await client.disconnect();
       return res.status(400).json({ error: 'Raccoon data required' });
     }
 
     // Validate raccoon stats
     const validatedRaccoon = {
-      name: raccoon.name.substring(0, 20), // Limit name length
+      name: raccoon.name.substring(0, 20),
       attack: Math.max(1, Math.min(20, raccoon.attack || 10)),
       defense: Math.max(1, Math.min(20, raccoon.defense || 10)),
       speed: Math.max(1, Math.min(20, raccoon.speed || 10)),
@@ -27,10 +30,12 @@ export default async function handler(req, res) {
     };
 
     // Add to fight queue
-    await kv.rpush('fight_queue', JSON.stringify(validatedRaccoon));
+    await client.rPush('fight_queue', JSON.stringify(validatedRaccoon));
 
     // Get current queue length
-    const queueLength = await kv.llen('fight_queue');
+    const queueLength = await client.lLen('fight_queue');
+
+    await client.disconnect();
 
     res.json({
       success: true,
@@ -40,6 +45,9 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Enter fight error:', error);
+    try {
+      await client.disconnect();
+    } catch (e) {}
     res.status(500).json({ error: 'Failed to enter fight' });
   }
 }
