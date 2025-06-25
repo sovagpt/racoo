@@ -164,6 +164,14 @@ Return as JSON with this structure:
       status: 'generated'
     });
 
+    // Update daily and total fight counters
+    const today = new Date().toISOString().split('T')[0];
+    await client.incr(`fights_today:${today}`);
+    await client.incr('total_fights_ever');
+    
+    // Set expiry on daily counter (expire tomorrow)
+    await client.expireAt(`fights_today:${today}`, Math.floor(Date.now() / 1000) + 86400);
+
     await client.disconnect();
 
     console.log(`Fight ${fightId} generated successfully`);
