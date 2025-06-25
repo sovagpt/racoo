@@ -876,20 +876,60 @@
             transform: translateY(-2px);
         }
         
+        .history-fighters-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .history-fighter {
+            text-align: center;
+            flex: 1;
+            max-width: 120px;
+        }
+        
+        .history-fighter-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #333, #555);
+            border: 2px solid #ff6600;
+            border-radius: 10px;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .history-fighter-name {
+            color: #d0d0d0;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .history-vs {
+            color: #ff6600;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ff6600;
+        }
+        
         .history-date {
             color: #999;
             font-size: 11px;
             margin-bottom: 5px;
         }
         
-        .history-fighters {
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        
         .history-result {
             font-size: 12px;
             color: #81c784;
+            text-align: center;
+            margin-top: 10px;
         }
         
         .fight-detail {
@@ -1210,19 +1250,49 @@
             <div class="modal-body" id="history-content">
                 <div class="history-item" onclick="showFightDetail('fight_001')">
                     <div class="history-date">2025-01-15 14:23:17</div>
-                    <div class="history-fighters"><span class="winner">ChampionRaccoon</span> vs <span class="loser">TrashLord99</span></div>
+                    <div class="history-fighters-display">
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">ChampionRaccoon</div>
+                        </div>
+                        <div class="history-vs">VS</div>
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">TrashLord99</div>
+                        </div>
+                    </div>
                     <div class="history-result">Winner: ChampionRaccoon | Prize: $67.89 | TKO Round 4</div>
                 </div>
                 
                 <div class="history-item" onclick="showFightDetail('fight_002')">
                     <div class="history-date">2025-01-15 14:18:42</div>
-                    <div class="history-fighters"><span class="winner">NightCrawler69</span> vs <span class="loser">GarbageKing</span></div>
+                    <div class="history-fighters-display">
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">NightCrawler69</div>
+                        </div>
+                        <div class="history-vs">VS</div>
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">GarbageKing</div>
+                        </div>
+                    </div>
                     <div class="history-result">Winner: NightCrawler69 | Prize: $45.23 | Decision</div>
                 </div>
                 
                 <div class="history-item" onclick="showFightDetail('fight_003')">
                     <div class="history-date">2025-01-15 14:13:55</div>
-                    <div class="history-fighters"><span class="winner">AutismLord</span> vs <span class="loser">TrashBandit</span></div>
+                    <div class="history-fighters-display">
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">AutismLord</div>
+                        </div>
+                        <div class="history-vs">VS</div>
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">TrashBandit</div>
+                        </div>
+                    </div>
                     <div class="history-result">Winner: AutismLord | Prize: $89.12 | KO Round 2</div>
                 </div>
                 
