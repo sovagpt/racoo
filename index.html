@@ -1832,6 +1832,54 @@
                 console.error('Failed to start fight stream:', error);
             }
         }
+
+        function updateBaseCharacter() {
+    const baseLayer = document.getElementById('base-layer');
+    
+    // Check what's selected
+    const hasHoodie = selectedTraits.hoodies !== 'none';
+    const hasHat = selectedTraits.hat !== 'none';
+    const hasSpecial = selectedTraits.special !== 'none';
+    
+    let baseName = 'normal';
+    
+    if (hasSpecial) {
+        baseName = 'niqab';
+    } else if (hasHoodie) {
+        baseName = 'hoodie';
+    } else if (hasHat) {
+        baseName = 'hat';
+    }
+    
+    baseLayer.style.backgroundImage = `url('assets/base/${baseName}.png')`;
+    baseLayer.style.backgroundSize = 'contain';
+    baseLayer.style.backgroundRepeat = 'no-repeat';
+    baseLayer.style.backgroundPosition = 'center';
+}
+
+function handleHatBlocking() {
+    const hatPreviews = document.querySelectorAll('[onclick*="selectTrait(\'hat\'"]');
+    const hasHoodie = selectedTraits.hoodies !== 'none';
+    
+    hatPreviews.forEach(preview => {
+        if (hasHoodie) {
+            preview.style.opacity = '0.3';
+            preview.style.pointerEvents = 'none';
+            preview.title = 'Cannot wear hat with hoodie';
+        } else {
+            preview.style.opacity = '1';
+            preview.style.pointerEvents = 'auto';
+            preview.title = '';
+        }
+    });
+    
+    // If hoodie is selected and hat was previously selected, remove hat
+    if (hasHoodie && selectedTraits.hat !== 'none') {
+        selectedTraits.hat = 'none';
+        document.querySelector('[onclick*="selectTrait(\'hat\', \'none\')"]').classList.add('selected');
+        document.getElementById('hat-layer').style.backgroundImage = 'none';
+    }
+}
         
         function addFightLogEntry(message, logType = 'normal') {
             const logElement = document.getElementById('fight-log');
@@ -1864,30 +1912,39 @@
         
         // Character Builder Functions
         function selectTrait(category, trait) {
-            selectedTraits[category] = trait;
-            
-            const categoryPreviews = document.querySelectorAll(`[onclick*="selectTrait('${category}',"]`);
-            categoryPreviews.forEach(preview => {
-                preview.classList.remove('selected');
-            });
-            event.target.classList.add('selected');
-            
-            updateCharacterPreview(category, trait);
-            updateCharacterStats();
-        }
+    selectedTraits[category] = trait;
+    
+    // Update visual selection
+    const categoryPreviews = document.querySelectorAll(`[onclick*="selectTrait('${category}',"]`);
+    categoryPreviews.forEach(preview => {
+        preview.classList.remove('selected');
+    });
+    event.target.classList.add('selected');
+    
+    // Update character preview and base
+    updateCharacterPreview(category, trait);
+    updateCharacterStats();
+}
         
         function updateCharacterPreview(category, trait) {
-            const layer = document.getElementById(category + '-layer');
-            
-            if (trait === 'none' || trait === 'normal') {
-                layer.style.backgroundImage = 'none';
-            } else {
-                layer.style.backgroundImage = `url('assets/${category}/${trait}.png')`;
-                layer.onerror = function() {
-                    layer.style.background = `linear-gradient(45deg, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)})`;
-                };
-            }
-        }
+    const layer = document.getElementById(category + '-layer');
+    
+    if (trait === 'none' || trait === 'normal') {
+        layer.style.backgroundImage = 'none';
+    } else {
+        const imagePath = `assets/${category}/${trait}.png`;
+        layer.style.backgroundImage = `url('${imagePath}')`;
+        layer.style.backgroundSize = 'contain';
+        layer.style.backgroundRepeat = 'no-repeat';
+        layer.style.backgroundPosition = 'center';
+    }
+    
+    // Update base character whenever any trait changes
+    updateBaseCharacter();
+    
+    // Handle hat blocking when hoodie is selected
+    handleHatBlocking();
+}
         
         function updateCharacterStats() {
             let attack = 10;
