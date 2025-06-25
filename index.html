@@ -226,7 +226,7 @@
             font-weight: bold;
             text-shadow: 0 0 10px #ff6600;
         }
-        
+
         .countdown-container {
             background: linear-gradient(45deg, #000000, #1a0a0a, #000000);
             border: 3px solid #00ff41;
@@ -495,196 +495,226 @@
             font-style: italic;
         }
         
-        .comments-section {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-            border: 3px solid #333;
-            border-radius: 15px;
-            margin: 30px 0;
-            overflow: hidden;
+        /* Character Builder Styles */
+        .character-builder {
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            border-radius: 0;
+            margin: 30px auto;
+            max-width: 800px;
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 11px;
+            box-shadow: 2px 2px 0 #808080;
         }
         
-        .comments-header {
-            background: linear-gradient(90deg, #333, #555, #333);
-            color: #fff;
-            padding: 15px 20px;
-            font-weight: bold;
-            border-bottom: 2px solid #555;
+        .builder-title-bar {
+            background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+            color: white;
+            padding: 2px 4px;
+            font-size: 11px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        .viewer-count {
-            color: #00ff41;
-            font-size: 12px;
-        }
-        
-        .comment-form {
-            padding: 20px;
-            border-bottom: 2px solid #333;
-        }
-        
-        .comment-input {
-            width: 100%;
-            background: #000;
-            border: 2px solid #555;
-            border-radius: 8px;
-            color: #d0d0d0;
-            padding: 12px;
-            font-family: inherit;
-            font-size: 13px;
-            resize: vertical;
-            min-height: 80px;
-            transition: border-color 0.3s;
-        }
-        
-        .comment-input:focus {
-            outline: none;
-            border-color: #ff6600;
-            box-shadow: 0 0 10px rgba(255,102,0,0.3);
-        }
-        
-        .comment-submit {
-            background: linear-gradient(45deg, #ff6600, #ff9933);
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            margin-top: 15px;
-            cursor: pointer;
-            font-family: inherit;
             font-weight: bold;
-            border-radius: 8px;
-            text-transform: uppercase;
-            transition: all 0.3s;
         }
         
-        .comment-submit:hover {
-            background: linear-gradient(45deg, #ff9933, #ffcc66);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,102,0,0.4);
+        .builder-title-text {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
-        .comments-feed {
-            max-height: 400px;
-            overflow-y: auto;
+        .builder-controls {
+            display: flex;
+            gap: 2px;
         }
         
-        .comment {
-            padding: 15px 20px;
-            border-bottom: 1px solid #2a2a2a;
-            font-size: 13px;
-            transition: background 0.3s;
+        .builder-control-btn {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            font-size: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .comment:hover {
-            background: rgba(255,102,0,0.05);
+        .builder-control-btn:active {
+            border: 1px inset #c0c0c0;
         }
         
-        .comment-header {
+        .builder-content {
+            background: #c0c0c0;
+            padding: 8px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 8px;
+            min-height: 500px;
+        }
+        
+        .trait-categories {
+            background: white;
+            border: 1px inset #c0c0c0;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .category-group {
             margin-bottom: 8px;
+        }
+        
+        .category-title {
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            padding: 4px 6px;
+            font-weight: bold;
             font-size: 11px;
+            margin-bottom: 6px;
+            text-align: center;
         }
         
-        .comment-name {
-            color: #117743;
-            font-weight: bold;
+        .trait-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
         }
         
-        .comment-time {
-            color: #999;
-            margin-left: 10px;
-        }
-        
-        .comment-number {
-            color: #ff6600;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        
-        .comment-text {
-            color: #d0d0d0;
-            line-height: 1.5;
-        }
-        
-        .greentext {
-            color: #789922;
-        }
-        
-        .enter-fight {
-            background: linear-gradient(45deg, #ff0080, #8000ff, #0080ff, #ff6600);
-            background-size: 400% 400%;
-            color: #ffffff;
-            border: 3px solid #fff;
-            padding: 20px 40px;
-            font-family: inherit;
-            font-weight: bold;
+        .trait-preview {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 1px inset #c0c0c0;
             cursor: pointer;
-            text-decoration: none;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #666;
+            position: relative;
+            transition: all 0.1s;
+        }
+        
+        .trait-preview:hover {
+            background: #e0e0e0;
+        }
+        
+        .trait-preview.selected {
+            border: 2px solid #000080;
+            background: #cce7ff;
+        }
+        
+        .trait-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .character-preview {
+            background: white;
+            border: 1px inset #c0c0c0;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .preview-title {
+            font-weight: bold;
+            text-align: center;
+            font-size: 11px;
+            background: #c0c0c0;
+            padding: 4px;
+            border: 1px outset #c0c0c0;
+        }
+        
+        .character-canvas {
+            width: 100%;
+            max-width: 800px;
+            height: 650px;
+            background: #f0f0f0;
+            border: 1px inset #c0c0c0;
+            margin: 0 auto;
             position: relative;
             overflow: hidden;
-            font-size: 18px;
-            letter-spacing: 2px;
-            animation: bgShift 3s ease-in-out infinite;
-            box-shadow: 0 0 30px rgba(255,102,0,0.5);
-            text-shadow: 2px 2px 4px #000;
-            display: block;
-            text-align: center;
-            margin: 30px auto;
-            max-width: 400px;
-            border-radius: 15px;
         }
         
-        @keyframes bgShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .character-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
         
-        .enter-fight:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(255,102,0,0.8);
+        .base-layer {
+            z-index: 1;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1300"><rect width="1600" height="1300" fill="%23f0f0f0"/><text x="800" y="650" text-anchor="middle" font-size="120" fill="%23666">BASE RACCOON</text></svg>');
         }
         
-        .fight-history {
-            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-            border: 3px solid #333;
-            border-radius: 15px;
-            margin: 30px 0;
-            padding: 25px;
+        .hat-layer { z-index: 10; }
+        .clothes-layer { z-index: 5; }
+        .glasses-layer { z-index: 8; }
+        .special-layer { z-index: 12; }
+        .hoodies-layer { z-index: 6; }
+        .body-layer { z-index: 2; }
+        
+        .builder-actions {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin-top: 8px;
         }
         
-        .history-title {
-            color: #ff6600;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .win98-button {
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            padding: 6px 16px;
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            min-width: 80px;
         }
         
-        .history-item {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            font-size: 12px;
-            transition: all 0.3s;
+        .win98-button:active {
+            border: 1px inset #c0c0c0;
         }
         
-        .history-item:hover {
-            border-color: #ff6600;
-            background: rgba(255,102,0,0.05);
+        .win98-button:hover {
+            background: #dcdcdc;
         }
         
-        .winner {
-            color: #81c784;
-            font-weight: bold;
+        .character-stats {
+            background: #f0f0f0;
+            border: 1px inset #c0c0c0;
+            padding: 8px;
+            font-size: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
         
-        .loser {
-            color: #ff6666;
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 2px 0;
+        }
+        
+        .character-name-input {
+            width: 100%;
+            border: 1px inset #c0c0c0;
+            padding: 4px 6px;
+            font-size: 11px;
+            font-family: inherit;
+            margin-bottom: 8px;
         }
         
         /* Modal styles */
@@ -969,6 +999,150 @@
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(153,69,255,0.4);
         }
+        
+        .comments-section {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            border: 3px solid #333;
+            border-radius: 15px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .comments-header {
+            background: linear-gradient(90deg, #333, #555, #333);
+            color: #fff;
+            padding: 15px 20px;
+            font-weight: bold;
+            border-bottom: 2px solid #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .viewer-count {
+            color: #00ff41;
+            font-size: 12px;
+        }
+        
+        .comment-form {
+            padding: 20px;
+            border-bottom: 2px solid #333;
+        }
+        
+        .comment-input {
+            width: 100%;
+            background: #000;
+            border: 2px solid #555;
+            border-radius: 8px;
+            color: #d0d0d0;
+            padding: 12px;
+            font-family: inherit;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.3s;
+        }
+        
+        .comment-input:focus {
+            outline: none;
+            border-color: #ff6600;
+            box-shadow: 0 0 10px rgba(255,102,0,0.3);
+        }
+        
+        .comment-submit {
+            background: linear-gradient(45deg, #ff6600, #ff9933);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 8px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        
+        .comment-submit:hover {
+            background: linear-gradient(45deg, #ff9933, #ffcc66);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,102,0,0.4);
+        }
+        
+        .comments-feed {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .comment {
+            padding: 15px 20px;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+        
+        .comment:hover {
+            background: rgba(255,102,0,0.05);
+        }
+        
+        .comment-header {
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+        
+        .comment-name {
+            color: #117743;
+            font-weight: bold;
+        }
+        
+        .comment-time {
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .comment-number {
+            color: #ff6600;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .comment-text {
+            color: #d0d0d0;
+            line-height: 1.5;
+        }
+        
+        .greentext {
+            color: #789922;
+        }
+        
+        .fight-history {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            border: 3px solid #333;
+            border-radius: 15px;
+            margin: 30px 0;
+            padding: 25px;
+        }
+        
+        .history-title {
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .winner {
+            color: #81c784;
+            font-weight: bold;
+        }
+        
+        .loser {
+            color: #ff6666;
+        }
+        
+        /* Mobile responsiveness */
         @media (max-width: 768px) {
             .fighters-display {
                 grid-template-columns: 1fr;
@@ -994,6 +1168,14 @@
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .builder-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-canvas {
+                height: 400px;
             }
         }
     </style>
@@ -1088,8 +1270,210 @@
             </div>
         </div>
         
-        <!-- Enter Next Fight -->
-        <a href="#" class="enter-fight">Enter Your Champion</a>
+        <!-- Character Builder -->
+        <div class="character-builder">
+            <div class="builder-title-bar">
+                <div class="builder-title-text">
+                    <span>Raccoon Character Builder v1.0</span>
+                </div>
+                <div class="builder-controls">
+                    <button class="builder-control-btn">_</button>
+                    <button class="builder-control-btn">□</button>
+                    <button class="builder-control-btn">×</button>
+                </div>
+            </div>
+            
+            <div class="builder-content">
+                <!-- Trait Categories -->
+                <div class="trait-categories">
+                    <div class="category-group">
+                        <div class="category-title">HAT</div>
+                        <div class="trait-preview-grid">
+                            <div class="trait-preview selected" onclick="selectTrait('hat', 'none')" data-trait="none">
+                                NONE
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hat', 'hat_1')" data-trait="hat_1">
+                                #1
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hat', 'hat_2')" data-trait="hat_2">
+                                #2
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hat', 'hat_3')" data-trait="hat_3">
+                                #3
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hat', 'hat_4')" data-trait="hat_4">
+                                #4
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hat', 'hat_5')" data-trait="hat_5">
+                                #5
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-group">
+                        <div class="category-title">CLOTHES</div>
+                        <div class="trait-preview-grid">
+                            <div class="trait-preview selected" onclick="selectTrait('clothes', 'none')" data-trait="none">
+                                NONE
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('clothes', 'clothes_1')" data-trait="clothes_1">
+                                #1
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('clothes', 'clothes_2')" data-trait="clothes_2">
+                                #2
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('clothes', 'clothes_3')" data-trait="clothes_3">
+                                #3
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('clothes', 'clothes_4')" data-trait="clothes_4">
+                                #4
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('clothes', 'clothes_5')" data-trait="clothes_5">
+                                #5
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-group">
+                        <div class="category-title">GLASSES</div>
+                        <div class="trait-preview-grid">
+                            <div class="trait-preview selected" onclick="selectTrait('glasses', 'none')" data-trait="none">
+                                NONE
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('glasses', 'glasses_1')" data-trait="glasses_1">
+                                #1
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('glasses', 'glasses_2')" data-trait="glasses_2">
+                                #2
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('glasses', 'glasses_3')" data-trait="glasses_3">
+                                #3
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('glasses', 'glasses_4')" data-trait="glasses_4">
+                                #4
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('glasses', 'glasses_5')" data-trait="glasses_5">
+                                #5
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-group">
+                        <div class="category-title">HOODIES</div>
+                        <div class="trait-preview-grid">
+                            <div class="trait-preview selected" onclick="selectTrait('hoodies', 'none')" data-trait="none">
+                                NONE
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hoodies', 'hoodies_1')" data-trait="hoodies_1">
+                                #1
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hoodies', 'hoodies_2')" data-trait="hoodies_2">
+                                #2
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hoodies', 'hoodies_3')" data-trait="hoodies_3">
+                                #3
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hoodies', 'hoodies_4')" data-trait="hoodies_4">
+                                #4
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('hoodies', 'hoodies_5')" data-trait="hoodies_5">
+                                #5
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-group">
+                        <div class="category-title">SPECIAL</div>
+                        <div class="trait-preview-grid">
+                            <div class="trait-preview selected" onclick="selectTrait('special', 'none')" data-trait="none">
+                                NONE
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('special', 'special_1')" data-trait="special_1">
+                                #1
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('special', 'special_2')" data-trait="special_2">
+                                #2
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('special', 'special_3')" data-trait="special_3">
+                                #3
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('special', 'special_4')" data-trait="special_4">
+                                #4
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('special', 'special_5')" data-trait="special_5">
+                                #5
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-group">
+                        <div class="category-title">BODY</div>
+                        <div class="trait-preview-grid">
+                            <div class="trait-preview selected" onclick="selectTrait('body', 'normal')" data-trait="normal">
+                                NORM
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('body', 'body_1')" data-trait="body_1">
+                                #1
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('body', 'body_2')" data-trait="body_2">
+                                #2
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('body', 'body_3')" data-trait="body_3">
+                                #3
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('body', 'body_4')" data-trait="body_4">
+                                #4
+                            </div>
+                            <div class="trait-preview" onclick="selectTrait('body', 'body_5')" data-trait="body_5">
+                                #5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Character Preview -->
+                <div class="character-preview">
+                    <div class="preview-title">Character Preview</div>
+                    
+                    <input type="text" class="character-name-input" placeholder="Enter character name..." id="character-name">
+                    
+                    <div class="character-canvas" id="character-canvas">
+                        <div class="character-layer base-layer" id="base-layer"></div>
+                        <div class="character-layer body-layer" id="body-layer"></div>
+                        <div class="character-layer clothes-layer" id="clothes-layer"></div>
+                        <div class="character-layer hoodies-layer" id="hoodies-layer"></div>
+                        <div class="character-layer glasses-layer" id="glasses-layer"></div>
+                        <div class="character-layer hat-layer" id="hat-layer"></div>
+                        <div class="character-layer special-layer" id="special-layer"></div>
+                    </div>
+                    
+                    <div class="character-stats">
+                        <div class="stat-row">
+                            <span>Attack:</span>
+                            <span id="attack-stat">10</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Defense:</span>
+                            <span id="defense-stat">10</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Speed:</span>
+                            <span id="speed-stat">10</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Rarity:</span>
+                            <span id="rarity-stat">Common</span>
+                        </div>
+                    </div>
+                    
+                    <div class="builder-actions">
+                        <button class="win98-button" onclick="resetCharacter()">Reset</button>
+                        <button class="win98-button" onclick="exportCharacter()">Export</button>
+                        <button class="win98-button" onclick="enterFight()">Enter Fight</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Live Comments -->
         <div class="comments-section">
@@ -1313,8 +1697,24 @@
         let fightInProgress = false;
         let currentFighters = null;
         
+        // Character Builder State
+        let selectedTraits = {
+            hat: 'none',
+            clothes: 'none',
+            glasses: 'none',
+            hoodies: 'none',
+            special: 'none',
+            body: 'normal'
+        };
+        
+        let characterStats = {
+            attack: 10,
+            defense: 10,
+            speed: 10
+        };
+        
         // Countdown timer
-        let timeLeft = 263; // 4:23 in seconds
+        let timeLeft = 263;
         
         function updateCountdown() {
             const minutes = Math.floor(timeLeft / 60);
@@ -1323,7 +1723,7 @@
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
             if (timeLeft <= 0) {
-                timeLeft = 300; // Reset to 5 minutes
+                timeLeft = 300;
                 startNewFight();
             } else {
                 timeLeft--;
@@ -1341,13 +1741,12 @@
                 if (stats.success) {
                     document.getElementById('fights-today').textContent = stats.fightsToday.toLocaleString();
                     document.getElementById('viewer-count').textContent = stats.activeViewers.toLocaleString();
-                    document.getElementById('total-prize').textContent = `${stats.totalPrizePool.toLocaleString()}`;
+                    document.getElementById('total-prize').textContent = `$${stats.totalPrizePool.toLocaleString()}`;
                     document.getElementById('champion-count').textContent = stats.championCount.toLocaleString();
                     document.getElementById('chat-viewer-count').textContent = `${stats.activeViewers.toLocaleString()} spectators`;
                 }
             } catch (error) {
                 console.error('Failed to load stats:', error);
-                // Set default values if API fails
                 document.getElementById('fights-today').textContent = '0';
                 document.getElementById('viewer-count').textContent = '0';
                 document.getElementById('total-prize').textContent = '$0';
@@ -1356,33 +1755,27 @@
             }
         }
         
-        // Update stats every 30 seconds
         setInterval(loadStats, 30000);
         
-        // Viewer count animation - now updates real count with small variations
         function animateViewerCount() {
-            // This will add small realistic fluctuations to the real viewer count
             const viewerElement = document.getElementById('viewer-count');
             const chatViewerElement = document.getElementById('chat-viewer-count');
             
-            // Get current count and add small variation
             const currentCount = parseInt(viewerElement.textContent.replace(/,/g, '')) || 0;
-            const variation = Math.floor(Math.random() * 10) - 5; // +/- 5 viewers
+            const variation = Math.floor(Math.random() * 10) - 5;
             const newCount = Math.max(0, currentCount + variation);
             
             viewerElement.textContent = newCount.toLocaleString();
             chatViewerElement.textContent = `${newCount.toLocaleString()} spectators`;
         }
         
-        // Only animate viewer count if we have real data
         setInterval(animateViewerCount, 15000);
         
-        // Start new fight (calls backend API)
+        // Start new fight
         async function startNewFight() {
             if (fightInProgress) return;
             
             try {
-                // This would call your backend API that uses Anthropic
                 const response = await fetch('/api/start-fight', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
@@ -1401,26 +1794,21 @@
             }
         }
         
-        // Update arena with fight data
         function updateArenaDisplay(fightData) {
             document.getElementById('arena-status').textContent = 'CHAMPIONSHIP BOUT IN PROGRESS';
             
-            // Update fighter displays with real data
             const fighters = document.querySelectorAll('.fighter');
             fighters[0].querySelector('.fighter-name').textContent = fightData.fighters[0].name;
             fighters[1].querySelector('.fighter-name').textContent = fightData.fighters[1].name;
             
-            // Update stats
             fighters[0].querySelector('.fighter-stats').textContent = 
                 `ATK: ${fightData.fighters[0].attack} | DEF: ${fightData.fighters[0].defense} | SPD: ${fightData.fighters[0].speed} | RANK: #${Math.floor(Math.random() * 100) + 1}`;
             fighters[1].querySelector('.fighter-stats').textContent = 
                 `ATK: ${fightData.fighters[1].attack} | DEF: ${fightData.fighters[1].defense} | SPD: ${fightData.fighters[1].speed} | RANK: #${Math.floor(Math.random() * 100) + 1}`;
         }
         
-        // Stream fight progress from backend (which uses Anthropic API)
         async function startFightStream(fightId) {
             try {
-                // This would establish SSE or WebSocket connection to your backend
                 const eventSource = new EventSource(`/api/fight-stream/${fightId}`);
                 
                 eventSource.onmessage = function(event) {
@@ -1445,7 +1833,6 @@
             }
         }
         
-        // Add real fight log entries from Anthropic API
         function addFightLogEntry(message, logType = 'normal') {
             const logElement = document.getElementById('fight-log');
             const newLine = document.createElement('div');
@@ -1456,7 +1843,6 @@
             logElement.scrollTop = logElement.scrollHeight;
         }
         
-        // Update health bars with real data
         function updateHealthBars(healthData) {
             const healthFills = document.querySelectorAll('.health-fill');
             const healthTexts = document.querySelectorAll('.health-text');
@@ -1468,14 +1854,207 @@
             healthTexts[1].textContent = `${healthData.fighter2.current}/${healthData.fighter2.max} HP`;
         }
         
-        // End fight and show results
         function endFight(winner, prize) {
             fightInProgress = false;
             document.getElementById('arena-status').textContent = `CHAMPIONSHIP OVER - ${winner.toUpperCase()} WINS!`;
             addFightLogEntry(`>>> ${winner} is the new champion and wins ${prize}!`, 'system');
             
-            // Update fight history would happen here
             updateFightHistory(winner, prize);
+        }
+        
+        // Character Builder Functions
+        function selectTrait(category, trait) {
+            selectedTraits[category] = trait;
+            
+            const categoryPreviews = document.querySelectorAll(`[onclick*="selectTrait('${category}',"]`);
+            categoryPreviews.forEach(preview => {
+                preview.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            updateCharacterPreview(category, trait);
+            updateCharacterStats();
+        }
+        
+        function updateCharacterPreview(category, trait) {
+            const layer = document.getElementById(category + '-layer');
+            
+            if (trait === 'none' || trait === 'normal') {
+                layer.style.backgroundImage = 'none';
+            } else {
+                layer.style.backgroundImage = `url('assets/${category}/${trait}.png')`;
+                layer.onerror = function() {
+                    layer.style.background = `linear-gradient(45deg, #${Math.floor(Math.random()*16777215).toString(16)}, #${Math.floor(Math.random()*16777215).toString(16)})`;
+                };
+            }
+        }
+        
+        function updateCharacterStats() {
+            let attack = 10;
+            let defense = 10;
+            let speed = 10;
+            let rarity = 'Common';
+            
+            const hatBonuses = {
+                'hat_1': { attack: 1, defense: 1 },
+                'hat_2': { attack: 2, defense: 1, rarity: 'Uncommon' },
+                'hat_3': { attack: 3, defense: 2, rarity: 'Rare' },
+                'hat_4': { attack: 2, speed: 2, rarity: 'Uncommon' },
+                'hat_5': { attack: 4, defense: 3, rarity: 'Epic' }
+            };
+            
+            const clothesBonuses = {
+                'clothes_1': { defense: 2 },
+                'clothes_2': { attack: 2, rarity: 'Uncommon' },
+                'clothes_3': { defense: 3, rarity: 'Uncommon' },
+                'clothes_4': { attack: 1, defense: 2 },
+                'clothes_5': { attack: 3, defense: 2, rarity: 'Rare' }
+            };
+            
+            const glassesBonuses = {
+                'glasses_1': { speed: 2 },
+                'glasses_2': { attack: 3, rarity: 'Rare' },
+                'glasses_3': { defense: 1, speed: 1, rarity: 'Uncommon' },
+                'glasses_4': { defense: 2 },
+                'glasses_5': { attack: 2, speed: 3, rarity: 'Epic' }
+            };
+            
+            const hoodieBonuses = {
+                'hoodies_1': { defense: 3 },
+                'hoodies_2': { attack: 2, defense: 1 },
+                'hoodies_3': { speed: 1, defense: 2 },
+                'hoodies_4': { defense: 4, rarity: 'Uncommon' },
+                'hoodies_5': { attack: 2, defense: 3, rarity: 'Rare' }
+            };
+            
+            const specialBonuses = {
+                'special_1': { speed: 3, rarity: 'Rare' },
+                'special_2': { attack: 4, rarity: 'Epic' },
+                'special_3': { attack: 3, defense: 3, rarity: 'Epic' },
+                'special_4': { speed: 5, attack: 2, rarity: 'Legendary' },
+                'special_5': { attack: 6, defense: 4, speed: 4, rarity: 'Legendary' }
+            };
+            
+            const bodyBonuses = {
+                'body_1': { attack: 4, defense: 2 },
+                'body_2': { defense: 5, speed: -1 },
+                'body_3': { speed: 4, defense: -1 },
+                'body_4': { attack: 3, defense: 3, speed: 2, rarity: 'Epic' },
+                'body_5': { attack: 5, defense: 5, speed: 3, rarity: 'Legendary' }
+            };
+            
+            const allBonuses = [hatBonuses, clothesBonuses, glassesBonuses, hoodieBonuses, specialBonuses, bodyBonuses];
+            const categories = ['hat', 'clothes', 'glasses', 'hoodies', 'special', 'body'];
+            
+            categories.forEach((category, index) => {
+                const trait = selectedTraits[category];
+                const bonuses = allBonuses[index][trait];
+                if (bonuses) {
+                    attack += bonuses.attack || 0;
+                    defense += bonuses.defense || 0;
+                    speed += bonuses.speed || 0;
+                    if (bonuses.rarity) rarity = bonuses.rarity;
+                }
+            });
+            
+            attack = Math.max(1, attack);
+            defense = Math.max(1, defense);
+            speed = Math.max(1, speed);
+            
+            document.getElementById('attack-stat').textContent = attack;
+            document.getElementById('defense-stat').textContent = defense;
+            document.getElementById('speed-stat').textContent = speed;
+            document.getElementById('rarity-stat').textContent = rarity;
+            
+            characterStats = { attack, defense, speed };
+        }
+        
+        function resetCharacter() {
+            selectedTraits = {
+                hat: 'none',
+                clothes: 'none',
+                glasses: 'none',
+                hoodies: 'none',
+                special: 'none',
+                body: 'normal'
+            };
+            
+            document.querySelectorAll('.trait-preview').forEach(preview => {
+                preview.classList.remove('selected');
+            });
+            
+            document.querySelector('[data-trait="none"]').classList.add('selected');
+            document.querySelector('[data-trait="normal"]').classList.add('selected');
+            
+            Object.keys(selectedTraits).forEach(category => {
+                if (category !== 'base') {
+                    const layer = document.getElementById(category + '-layer');
+                    layer.style.backgroundImage = 'none';
+                }
+            });
+            
+            document.getElementById('character-name').value = '';
+            updateCharacterStats();
+        }
+        
+        function exportCharacter() {
+            const name = document.getElementById('character-name').value || 'UnnamedRaccoon';
+            const characterData = {
+                name: name,
+                traits: selectedTraits,
+                stats: characterStats
+            };
+            
+            const dataStr = JSON.stringify(characterData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_character.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            
+            alert(`Character "${name}" exported!\n\nAttack: ${characterStats.attack}\nDefense: ${characterStats.defense}\nSpeed: ${characterStats.speed}\n\nCharacter data downloaded as JSON file.`);
+        }
+        
+        async function enterFight() {
+            const name = document.getElementById('character-name').value || 'UnnamedRaccoon';
+            
+            if (name.trim() === '') {
+                alert('Please enter a character name!');
+                return;
+            }
+            
+            const raccoonData = {
+                name: name,
+                attack: characterStats.attack,
+                defense: characterStats.defense,
+                speed: characterStats.speed,
+                traits: Object.entries(selectedTraits)
+                    .filter(([key, value]) => value !== 'none' && value !== 'normal')
+                    .map(([key, value]) => value)
+            };
+            
+            try {
+                const response = await fetch('/api/enter-fight', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ raccoon: raccoonData })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`${name} has been entered into the championship!\nQueue position: ${result.queuePosition}\n\nStats:\nAttack: ${raccoonData.attack}\nDefense: ${raccoonData.defense}\nSpeed: ${raccoonData.speed}`);
+                } else {
+                    alert('Failed to enter championship: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Failed to enter fight:', error);
+                alert('Failed to enter championship. Please try again.');
+            }
         }
         
         // Real comment submission
@@ -1486,7 +2065,6 @@
             if (!message) return;
             
             try {
-                // Send comment to backend
                 const response = await fetch('/api/post-comment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1507,7 +2085,6 @@
             }
         });
         
-        // Add comment to feed
         function addCommentToFeed(comment) {
             const commentsFeed = document.getElementById('comments-feed');
             const newComment = document.createElement('div');
@@ -1525,13 +2102,11 @@
             commentsFeed.appendChild(newComment);
             commentsFeed.scrollTop = commentsFeed.scrollHeight;
             
-            // Keep only last 50 comments
             while (commentsFeed.children.length > 50) {
                 commentsFeed.removeChild(commentsFeed.firstChild);
             }
         }
         
-        // Load existing comments on page load
         async function loadComments() {
             try {
                 const response = await fetch('/api/get-comments');
@@ -1543,7 +2118,6 @@
             }
         }
         
-        // Enter key to submit comment
         document.querySelector('.comment-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -1551,51 +2125,9 @@
             }
         });
         
-        // Submit raccoon for next fight
-        document.querySelector('.enter-fight').addEventListener('click', async function(e) {
-            e.preventDefault();
-            
-            try {
-                const response = await fetch('/api/enter-fight', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        // This would include the user's raccoon data
-                        raccoon: getUserRaccoon() 
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('Your champion has been entered in the next bout!');
-                } else {
-                    alert('Failed to enter championship: ' + result.error);
-                }
-            } catch (error) {
-                console.error('Failed to enter fight:', error);
-            }
-        });
-        
-        // Get user's raccoon data (from character builder)
-        function getUserRaccoon() {
-            // This would get the raccoon data from localStorage or the character builder
-            return {
-                name: 'UserChampion',
-                traits: {},
-                stats: { attack: 10, defense: 10, speed: 10 }
-            };
-        }
-        
-        // Update fight history
         function updateFightHistory(winner, prize) {
-            // This would call backend to update fight history
             console.log(`Championship ended: ${winner} won ${prize}`);
         }
-        
-        // Initialize
-        loadStats();
-        loadComments();
         
         // Modal functionality
         const faqModal = document.getElementById('faq-modal');
@@ -1605,7 +2137,6 @@
         const faqClose = document.getElementById('faq-close');
         const historyClose = document.getElementById('history-close');
         
-        // FAQ Modal
         faqBtn.addEventListener('click', (e) => {
             e.preventDefault();
             faqModal.style.display = 'block';
@@ -1615,7 +2146,6 @@
             faqModal.style.display = 'none';
         });
         
-        // History Modal
         historyBtn.addEventListener('click', (e) => {
             e.preventDefault();
             loadFightHistory();
@@ -1626,7 +2156,6 @@
             historyModal.style.display = 'none';
         });
         
-        // Close modals when clicking outside
         window.addEventListener('click', (e) => {
             if (e.target === faqModal) {
                 faqModal.style.display = 'none';
@@ -1636,21 +2165,16 @@
             }
         });
         
-        // FAQ accordion functionality
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const answer = question.nextElementSibling;
                 const isOpen = answer.style.display === 'block';
                 
-                // Close all other answers
                 document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-                
-                // Toggle current answer
                 answer.style.display = isOpen ? 'none' : 'block';
             });
         });
         
-        // Load fight history from backend
         async function loadFightHistory() {
             try {
                 const response = await fetch('/api/get-fight-history');
@@ -1664,11 +2188,9 @@
             }
         }
         
-        // Update history display
         function updateHistoryDisplay(fights) {
             const historyContent = document.getElementById('history-content');
             
-            // Clear existing content except fight detail div
             const fightDetail = document.getElementById('fight-detail');
             historyContent.innerHTML = '';
             historyContent.appendChild(fightDetail);
@@ -1680,11 +2202,19 @@
                 
                 historyItem.innerHTML = `
                     <div class="history-date">${fight.date}</div>
-                    <div class="history-fighters">
-                        <span class="winner">${fight.winner}</span> vs <span class="loser">${fight.loser}</span>
+                    <div class="history-fighters-display">
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">${fight.fighter1Name}</div>
+                        </div>
+                        <div class="history-vs">VS</div>
+                        <div class="history-fighter">
+                            <div class="history-fighter-image">[RACCOON_IMG]<br>80x80</div>
+                            <div class="history-fighter-name">${fight.fighter2Name}</div>
+                        </div>
                     </div>
                     <div class="history-result">
-                        Winner: ${fight.winner} | Prize: ${fight.prize} | ${fight.result}
+                        Winner: ${fight.winner} | Prize: $${fight.prize} | ${fight.result}
                     </div>
                 `;
                 
@@ -1692,14 +2222,12 @@
             });
         }
         
-        // Show fight detail
         function showFightDetail(fightId) {
             const fightDetail = document.getElementById('fight-detail');
             const fightInfo = document.getElementById('fight-info');
             const fightLogDetail = document.getElementById('fight-log-detail');
             const solscanLink = document.getElementById('solscan-link');
             
-            // Mock fight data - in reality this would come from your backend
             const mockFights = {
                 'fight_001': {
                     fighters: 'ChampionRaccoon vs TrashLord99',
@@ -1744,6 +2272,10 @@
                 fightDetail.style.display = 'block';
             }
         }
+        
+        // Initialize
+        loadStats();
+        loadComments();
     </script>
 </body>
 </html>
