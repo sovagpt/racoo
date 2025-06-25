@@ -2054,32 +2054,35 @@ function handleHatBlocking() {
         }
         
         function resetCharacter() {
-            selectedTraits = {
-                hat: 'none',
-                clothes: 'none',
-                glasses: 'none',
-                hoodies: 'none',
-                special: 'none',
-                body: 'normal'
-            };
-            
-            document.querySelectorAll('.trait-preview').forEach(preview => {
-                preview.classList.remove('selected');
-            });
-            
-            document.querySelector('[data-trait="none"]').classList.add('selected');
-            document.querySelector('[data-trait="normal"]').classList.add('selected');
-            
-            Object.keys(selectedTraits).forEach(category => {
-                if (category !== 'base') {
-                    const layer = document.getElementById(category + '-layer');
-                    layer.style.backgroundImage = 'none';
-                }
-            });
-            
-            document.getElementById('character-name').value = '';
-            updateCharacterStats();
-        }
+    selectedTraits = {
+        hat: 'none',
+        clothes: 'none',
+        glasses: 'none',
+        hoodies: 'none',
+        special: 'none',
+        body: 'normal'
+    };
+    
+    document.querySelectorAll('.trait-preview').forEach(preview => {
+        preview.classList.remove('selected');
+    });
+    
+    document.querySelector('[data-trait="none"]').classList.add('selected');
+    document.querySelector('[data-trait="normal"]').classList.add('selected');
+    
+    // Clear all layers including both hoodie layers
+    document.getElementById('hat-layer').style.backgroundImage = 'none';
+    document.getElementById('clothes-layer').style.backgroundImage = 'none';
+    document.getElementById('glasses-layer').style.backgroundImage = 'none';
+    document.getElementById('hoodies-back-layer').style.backgroundImage = 'none';
+    document.getElementById('hoodies-front-layer').style.backgroundImage = 'none';
+    document.getElementById('special-layer').style.backgroundImage = 'none';
+    document.getElementById('body-layer').style.backgroundImage = 'none';
+    
+    document.getElementById('character-name').value = '';
+    updateBaseCharacter(); // This will set the base to normal
+    updateCharacterStats();
+}
         
         function exportCharacter() {
             const name = document.getElementById('character-name').value || 'UnnamedRaccoon';
